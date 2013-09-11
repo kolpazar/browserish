@@ -26,12 +26,16 @@ public abstract class PrefsGroup {
 		return prefs.get(prefName);
 	}
 	
-	public void add(Setting setting) {
-		prefs.put(setting.getName(), setting);
+	public void add(Pref pref) {
+		prefs.put(pref.getName(), pref);
 	}
 	
 	public ArrayList<Pref> getArrayList() {
 		return new ArrayList<Pref>(prefs.values());
+	}
+	
+	public int size() {
+		return prefs.size();
 	}
 	
 	public void load() {

@@ -13,6 +13,7 @@ public class Settings extends PrefsGroup {
 	public Settings() {
 		super("general");
 		add(new Setting(SETTING_GENERAL_ENABLED, "Enable Browserish", ""));
+		add(new SettingHeader("Browsers"));
 		add(new Setting(SETTING_GENERAL_ENABLED_AOSP, "Stock Android Browser", ""));
 	}
 
@@ -38,7 +39,9 @@ public class Settings extends PrefsGroup {
 	@Override
 	protected void savePrefs(FileOutputStream outStream) throws IOException {
 		for (Pref pref: prefs.values()) {
-			pref.save(outStream);
+			if (pref instanceof Setting) {
+				pref.save(outStream);
+			}
 		}
 	}
 

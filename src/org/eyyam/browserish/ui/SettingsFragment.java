@@ -31,15 +31,14 @@ public class SettingsFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_general, container, false);
 		
 		ListView listGeneral = (ListView) view.findViewById(R.id.listGeneral);
-		SettingsAdapter listAdapter = new SettingsAdapter(container.getContext(), R.layout.prefs_check, settings.getArrayList());
+		SettingsAdapter listAdapter = new SettingsAdapter(container.getContext(), R.layout.row_setting, settings.getArrayList());
 		listGeneral.setAdapter(listAdapter);
 		listGeneral.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Setting setting = (Setting) parent.getItemAtPosition(position);
 				setting.setBoolean(!setting.getBoolean());
-				CheckBox check = (CheckBox) view.findViewById(R.id.prefsCheck);
+				CheckBox check = (CheckBox) view.findViewById(R.id.settingCheck);
 				check.toggle();
 				settings.save();
 			}

@@ -4,10 +4,12 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import org.eyyam.browserish.ModuleManager;
+import org.eyyam.browserish.common.PageAction;
 import org.eyyam.browserish.module.Module;
 
 import android.content.Context;
@@ -120,10 +122,27 @@ public class BrowserAOSP extends Browser {
 		});
 	}
 	
+	public void injectStyle(Object webView, String filename) {
+		String js = "javascript: function browserish_inject() { var elem = document.createElement('link'); elem.rel = 'stylesheet'; elem.href = 'browserish://" + uuid + filename + "'; document.documentElement.appendChild(elem); }; browserish_inject(); ";
+		executeJS(webView, js);
+	}
+	
 	public void documentStart(Object webView) {
 		XposedBridge.log("Browserish DOC START");
-		String js = "javascript: function browserish_inject() { var elem = document.createElement('link'); elem.rel = 'stylesheet'; elem.href = 'browserish://" + uuid + "/style/red.css'; document.documentElement.appendChild(elem); }; browserish_inject(); ";
-		executeJS(webView, js);
+		List<PageAction> actions = moduleManager.documentStart(getWebViewUrl(webView));
+		XposedBridge.log("Browserish applying " + actions.size() + " actions.");
+		for (PageAction action: actions) {
+			XposedBridge.log("Browserish action " + action.getType() + " file " + action.getFilename());
+			switch(action.getType()) {
+			case STYLE:
+				injectStyle(webView, action.getFilename());
+				break;
+			case SCRIPT:
+				
+			}
+		}
+		//String js = "javascript: function browserish_inject() { var elem = document.createElement('link'); elem.rel = 'stylesheet'; elem.href = 'browserish://" + uuid + "/style/red.css'; document.documentElement.appendChild(elem); }; browserish_inject(); ";
+		//executeJS(webView, js);
 	}
 	
 	public void documentLoaded(Object webView) {

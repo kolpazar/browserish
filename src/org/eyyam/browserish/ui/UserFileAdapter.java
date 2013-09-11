@@ -26,6 +26,7 @@ public class UserFileAdapter extends ArrayAdapter<Pref> {
 
 	private class ViewHolder {
 		TextView text;
+		TextView subText;
 		CheckBox check;
 	}
 
@@ -36,11 +37,12 @@ public class UserFileAdapter extends ArrayAdapter<Pref> {
 		if (convertView == null) {
 			LayoutInflater vi = (LayoutInflater) getContext().getSystemService(
 					Context.LAYOUT_INFLATER_SERVICE);
-			convertView = vi.inflate(R.layout.prefs_check, null);
+			convertView = vi.inflate(R.layout.row_userfile, null);
 
 			holder = new ViewHolder();
-			holder.text = (TextView) convertView.findViewById(R.id.prefsText);
-			holder.check = (CheckBox) convertView.findViewById(R.id.prefsCheck);
+			holder.text = (TextView) convertView.findViewById(R.id.fileText);
+			holder.subText = (TextView) convertView.findViewById(R.id.fileSubText);
+			holder.check = (CheckBox) convertView.findViewById(R.id.fileCheck);
 			convertView.setTag(holder);
 			holder.check.setClickable(false);
 		} 
@@ -50,7 +52,8 @@ public class UserFileAdapter extends ArrayAdapter<Pref> {
 
 		UserFile file = (UserFile) fileList.get(position);
 		holder.text.setText(file.getText());
-		holder.check.setChecked(file.getEnabled());
+		holder.subText.setText(file.getSubText());
+		holder.check.setChecked(file.isEnabled());
 		return convertView;
 
 	}

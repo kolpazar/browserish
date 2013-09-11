@@ -3,8 +3,10 @@ package org.eyyam.browserish.module;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.List;
 
 import org.eyyam.browserish.common.Constants;
+import org.eyyam.browserish.common.PageAction;
 
 import android.os.Environment;
 
@@ -32,5 +34,7 @@ public abstract class Module {
 	public abstract String getMimeType(String filename);
 	
 	public abstract String getEncoding(String filename);
+
+	public abstract void getActionsForUrl(String url, List<PageAction> list);
 	
 }

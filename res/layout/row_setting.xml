@@ -3,12 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?android:attr/listChoiceBackgroundIndicator"
     android:minHeight="?android:attr/listPreferredItemHeight"
 	>
 
     <CheckBox
-        android:id="@+id/prefsCheck"
+        android:id="@+id/settingCheck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -20,7 +19,7 @@
         android:focusable="false"/>
 
     <TextView
-        android:id="@+id/prefsText"
+        android:id="@+id/settingText"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"

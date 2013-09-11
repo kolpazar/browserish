@@ -12,7 +12,7 @@ public class PrefsCheck extends RelativeLayout {
 	public PrefsCheck(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		LayoutInflater inf = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		inf.inflate(R.layout.prefs_check, this, true);	
+		inf.inflate(R.layout.row_setting, this, true);	
 	}
 
 }

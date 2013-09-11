@@ -1,14 +1,18 @@
 package org.eyyam.browserish;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
+import org.eyyam.browserish.common.PageAction;
 import org.eyyam.browserish.module.Module;
 import org.eyyam.browserish.module.ModuleStyle;
 
 public class ModuleManager {
 
-	private Map<String,Module> modules = new HashMap<String,Module>();
+	private Map<String,Module> modules = new LinkedHashMap<String,Module>();
 	
 	public ModuleManager() {
 		Module m;
@@ -20,11 +24,15 @@ public class ModuleManager {
 		return modules.get(id);
 	}
 	
-	public void documentStart() {
-		
+	public List<PageAction> documentStart(String url) {
+		List<PageAction> list = new LinkedList<PageAction>();
+		for (Module module: modules.values()) {
+			module.getActionsForUrl(url, list);
+		}
+		return list;
 	}
 	
-	public void documentFinish() {
+	public void documentFinish(String url) {
 		
 	}
 	

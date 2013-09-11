@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.eyyam.browserish.R;
 import org.eyyam.browserish.prefs.Pref;
 import org.eyyam.browserish.prefs.Setting;
+import org.eyyam.browserish.prefs.SettingHeader;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class SettingsAdapter extends ArrayAdapter<Pref> {
@@ -30,27 +32,49 @@ public class SettingsAdapter extends ArrayAdapter<Pref> {
 	}
 
 	@Override
+	public boolean areAllItemsEnabled() {
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled(int position) {
+		return !(settingList.get(position) instanceof SettingHeader);
+	}
+
+	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
+		Pref pref = settingList.get(position);
+		if (((pref instanceof Setting) && !(convertView instanceof RelativeLayout)) ||
+				((pref instanceof SettingHeader) && !(convertView instanceof TextView))) {
+			convertView = null;
+		}
 		ViewHolder holder = null;
+		
 		if (convertView == null) {
 			LayoutInflater vi = (LayoutInflater) getContext().getSystemService(
 					Context.LAYOUT_INFLATER_SERVICE);
-			convertView = vi.inflate(R.layout.prefs_check, null);
-
-			holder = new ViewHolder();
-			holder.text = (TextView) convertView.findViewById(R.id.prefsText);
-			holder.check = (CheckBox) convertView.findViewById(R.id.prefsCheck);
-			convertView.setTag(holder);
-			holder.check.setClickable(false);
-		} 
-		else {
+			if (pref instanceof Setting) {
+				convertView = vi.inflate(R.layout.row_setting, null);
+				holder = new ViewHolder();
+				holder.text = (TextView) convertView.findViewById(R.id.settingText);
+				holder.check = (CheckBox) convertView.findViewById(R.id.settingCheck);
+				convertView.setTag(holder);
+				holder.check.setClickable(false);
+			} else {
+				convertView = vi.inflate(R.layout.row_header, null);
+				//convertView.setClickable(false);
+			}
+		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-
-		Setting setting = (Setting) settingList.get(position);
-		holder.text.setText(setting.getText());
-		holder.check.setChecked(setting.getBoolean());
+		
+		if (pref instanceof Setting) {
+			holder.text.setText(pref.getText());
+			holder.check.setChecked(((Setting) pref).getBoolean());
+		} else {
+			((TextView) convertView).setText(pref.getText()); 
+		}
 		return convertView;
 
 	}

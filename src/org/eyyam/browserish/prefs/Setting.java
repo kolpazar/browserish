@@ -39,7 +39,7 @@ public class Setting extends Pref {
 
 	@Override
 	public void set(String name, String value) {
-		value = value;
+		this.value = value;
 	}
 
 }

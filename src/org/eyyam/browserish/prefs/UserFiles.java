@@ -5,6 +5,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
+
+import org.eyyam.browserish.common.PageAction;
 
 public class UserFiles extends PrefsGroup {
 
@@ -47,6 +50,14 @@ public class UserFiles extends PrefsGroup {
 			String name = "[" + pref.getName() + "]\n";
 			outStream.write(name.getBytes());
 			pref.save(outStream);
+		}
+	}
+	
+	public void getActionsForUrl(String url, List<PageAction> list) {
+		for (Pref pref: prefs.values()) {
+			if (((UserFile) pref).appliesToUrl(url)) {
+				list.add(((UserFile) pref).getAction(name));
+			}
 		}
 	}
 
