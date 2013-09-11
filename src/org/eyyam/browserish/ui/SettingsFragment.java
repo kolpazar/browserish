@@ -2,10 +2,10 @@ package org.eyyam.browserish.ui;
 
 
 import org.eyyam.browserish.R;
+import org.eyyam.browserish.prefs.PrefsGroup;
+import org.eyyam.browserish.prefs.Setting;
+import org.eyyam.browserish.prefs.Settings;
 
-import prefs.Settings;
-import prefs.Setting;
-import prefs.PrefsGroup;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;

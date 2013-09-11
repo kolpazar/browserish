@@ -2,9 +2,9 @@ package org.eyyam.browserish;
 
 import org.eyyam.browserish.browser.Browser;
 import org.eyyam.browserish.browser.BrowserAOSP;
+import org.eyyam.browserish.prefs.PrefsGroup;
+import org.eyyam.browserish.prefs.Settings;
 
-import prefs.Settings;
-import prefs.PrefsGroup;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;

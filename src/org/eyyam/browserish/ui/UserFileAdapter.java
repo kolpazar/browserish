@@ -3,9 +3,9 @@ package org.eyyam.browserish.ui;
 import java.util.ArrayList;
 
 import org.eyyam.browserish.R;
+import org.eyyam.browserish.prefs.Pref;
+import org.eyyam.browserish.prefs.UserFile;
 
-import prefs.Pref;
-import prefs.UserFile;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

@@ -1,8 +1,8 @@
 package org.eyyam.browserish.ui;
 
 import org.eyyam.browserish.R;
+import org.eyyam.browserish.prefs.UserFiles;
 
-import prefs.UserFiles;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;

@@ -1,4 +1,4 @@
-package prefs;
+package org.eyyam.browserish.prefs;
 
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
