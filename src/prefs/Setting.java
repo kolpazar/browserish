@@ -1,34 +1,20 @@
-package org.eyyam.browserish.settings;
+package prefs;
 
-public class Setting {
+import java.io.FileOutputStream;
+import java.io.IOException;
 
-	private String name;
-	private String text;
-	private String subText;
+public class Setting extends Pref {
+
 	private String value;
 	
 	public Setting(String name, String text, String subText) {
-		this.name = name;
-		this.text = text;
-		this.subText = subText;
+		super(name, text, subText);
 	}
 	
 	public Setting(String name, String text) {
 		this(name, text, "");
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public String getSubText() {
-		return subText;
-	}
-	
 	public void setBoolean(boolean value) {
 		this.value = Boolean.toString(value);
 	}
@@ -43,6 +29,17 @@ public class Setting {
 	
 	public String getString() {
 		return value;
+	}
+
+	@Override
+	public void save(FileOutputStream outStream) throws IOException {
+		String line = name + "=" + value + "\n";
+		outStream.write(line.getBytes());
+	}
+
+	@Override
+	public void set(String name, String value) {
+		value = value;
 	}
 
 }

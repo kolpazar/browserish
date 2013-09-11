@@ -3,8 +3,9 @@ package org.eyyam.browserish.ui;
 import java.util.ArrayList;
 
 import org.eyyam.browserish.R;
-import org.eyyam.browserish.settings.Setting;
 
+import prefs.Pref;
+import prefs.Setting;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +14,13 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-public class GeneralListAdapter extends ArrayAdapter<Setting> {
+public class SettingsAdapter extends ArrayAdapter<Pref> {
 
-	private ArrayList<Setting> settingList;
+	private ArrayList<Pref> settingList;
 
-	public GeneralListAdapter(Context context, int textViewResourceId, ArrayList<Setting> settingList) {
+	public SettingsAdapter(Context context, int textViewResourceId, ArrayList<Pref> settingList) {
 		super(context, textViewResourceId, settingList);
-		this.settingList = new ArrayList<Setting>();
+		this.settingList = new ArrayList<Pref>();
 		this.settingList.addAll(settingList);
 	}
 
@@ -47,7 +48,7 @@ public class GeneralListAdapter extends ArrayAdapter<Setting> {
 			holder = (ViewHolder) convertView.getTag();
 		}
 
-		Setting setting = settingList.get(position);
+		Setting setting = (Setting) settingList.get(position);
 		holder.text.setText(setting.getText());
 		holder.check.setChecked(setting.getBoolean());
 		return convertView;

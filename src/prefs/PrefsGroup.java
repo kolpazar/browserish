@@ -1,6 +1,5 @@
-package org.eyyam.browserish.settings;
+package prefs;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -14,25 +13,25 @@ import org.eyyam.browserish.common.Constants;
 
 import android.os.Environment;
 
-public class SettingsGroup {
+public abstract class PrefsGroup {
 
-	private Map<String, Setting> settings = new LinkedHashMap<String, Setting>();
-	private String name;
+	protected Map<String, Pref> prefs = new LinkedHashMap<String, Pref>();
+	protected String name;
 	
-	public SettingsGroup(String name) {
+	public PrefsGroup(String name) {
 		this.name = name;
 	}
 	
-	public Setting getByName(String settingName) {
-		return settings.get(settingName);
+	public Pref getByName(String prefName) {
+		return prefs.get(prefName);
 	}
 	
 	public void add(Setting setting) {
-		settings.put(setting.getName(), setting);
+		prefs.put(setting.getName(), setting);
 	}
 	
-	public ArrayList<Setting> getArrayList() {
-		return new ArrayList<Setting>(settings.values());
+	public ArrayList<Pref> getArrayList() {
+		return new ArrayList<Pref>(prefs.values());
 	}
 	
 	public void load() {
@@ -40,35 +39,25 @@ public class SettingsGroup {
 			BufferedReader reader = new BufferedReader(new FileReader(
 					Environment.getExternalStorageDirectory().getAbsolutePath() + 
 					Constants.BROWSERISH_FOLDER + name + ".conf"));
-			String line;
-			while ((line = reader.readLine()) != null) {
-				int i = line.indexOf("=");
-				if (i < 0) {
-					continue;
-				}
-				String settingName = line.substring(0, i);
-				Setting setting = settings.get(settingName);
-				if (setting != null) {
-					setting.setString(line.substring(i + 1));
-				}
-			}
+			
+			loadPrefs(reader);
 			reader.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 	}
+	
+	protected abstract void loadPrefs(BufferedReader reader) throws IOException;
 	
 	public void save() {
 		try {
 			FileOutputStream out = new FileOutputStream(
 					Environment.getExternalStorageDirectory().getAbsolutePath() + 
 					Constants.BROWSERISH_FOLDER + name + ".conf");
-			for (Setting setting: settings.values()) {
-				String line = setting.getName() + "=" + setting.getString() + "\n";
-				out.write(line.getBytes());
-			}
+			savePrefs(out);
 			out.flush();
 			out.close();
 		} catch (FileNotFoundException e) {
@@ -77,4 +66,7 @@ public class SettingsGroup {
 			e.printStackTrace();
 		}
 	}
+	
+	protected abstract void savePrefs(FileOutputStream outStream) throws IOException;
+	
 }

@@ -11,7 +11,7 @@ import android.content.Context;
 
 import org.eyyam.android.support.view.ViewPager;
 import org.eyyam.android.support.app.FragmentPagerAdapter;
-import org.eyyam.browserish.ui.GeneralFragment;
+import org.eyyam.browserish.ui.SettingsFragment;
 import org.eyyam.browserish.ui.ScriptFragment;
 import org.eyyam.browserish.ui.StyleFragment;
 
@@ -36,7 +36,7 @@ public class BrowserishActivity extends Activity {
         setContentView(mViewPager);
 
         mTabsAdapter = new TabsAdapter(this, mViewPager);
-        mTabsAdapter.addTab(actionBar.newTab().setText("General"), GeneralFragment.class, null);
+        mTabsAdapter.addTab(actionBar.newTab().setText("General"), SettingsFragment.class, null);
         mTabsAdapter.addTab(actionBar.newTab().setText("Styles"), StyleFragment.class, null);
         mTabsAdapter.addTab(actionBar.newTab().setText("Scripts"), ScriptFragment.class, null);
 	}

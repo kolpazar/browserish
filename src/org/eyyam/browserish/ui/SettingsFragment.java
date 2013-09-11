@@ -2,10 +2,10 @@ package org.eyyam.browserish.ui;
 
 
 import org.eyyam.browserish.R;
-import org.eyyam.browserish.settings.GeneralSettings;
-import org.eyyam.browserish.settings.Setting;
-import org.eyyam.browserish.settings.SettingsGroup;
 
+import prefs.Settings;
+import prefs.Setting;
+import prefs.PrefsGroup;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,13 +16,13 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class GeneralFragment extends Fragment {
+public class SettingsFragment extends Fragment {
 
-	private SettingsGroup generalSettings;
+	private Settings settings;
 	
-	public GeneralFragment() {
-		generalSettings = new GeneralSettings();
-		generalSettings.load();
+	public SettingsFragment() {
+		settings = new Settings();
+		settings.load();
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class GeneralFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_general, container, false);
 		
 		ListView listGeneral = (ListView) view.findViewById(R.id.listGeneral);
-		GeneralListAdapter listAdapter = new GeneralListAdapter(container.getContext(), R.layout.prefs_check, generalSettings.getArrayList());
+		SettingsAdapter listAdapter = new SettingsAdapter(container.getContext(), R.layout.prefs_check, settings.getArrayList());
 		listGeneral.setAdapter(listAdapter);
 		listGeneral.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -41,8 +41,7 @@ public class GeneralFragment extends Fragment {
 				setting.setBoolean(!setting.getBoolean());
 				CheckBox check = (CheckBox) view.findViewById(R.id.prefsCheck);
 				check.toggle();
-				Toast.makeText(getActivity().getApplicationContext(), setting.getText(), Toast.LENGTH_SHORT).show();
-				generalSettings.save();
+				settings.save();
 			}
 		});
 		

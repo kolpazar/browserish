@@ -2,6 +2,7 @@ package org.eyyam.browserish.ui;
 
 import org.eyyam.browserish.R;
 
+import prefs.UserFiles;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,7 +12,7 @@ import android.view.ViewGroup;
 public class ScriptFragment extends Fragment {
 
 	public ScriptFragment() {
-		
+
 	}
 
 	@Override
