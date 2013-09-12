@@ -29,6 +29,6 @@ public abstract class Pref {
 	
 	public abstract void save(FileOutputStream outStream) throws IOException;
 
-	public abstract void set(String name, String value);
+	public abstract void setConfig(String name, String value);
 	
 }

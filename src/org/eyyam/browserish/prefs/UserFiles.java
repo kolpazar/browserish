@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import org.eyyam.browserish.common.PageAction;
@@ -40,7 +39,7 @@ public class UserFiles extends PrefsGroup {
 			if ((pref == null) || (i < 0)) {
 				continue;
 			}
-			pref.set(line.substring(0, i), line.substring(i + 1));
+			pref.setConfig(line.substring(0, i), line.substring(i + 1));
 		}
 	}
 

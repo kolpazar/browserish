@@ -38,7 +38,7 @@ public class Setting extends Pref {
 	}
 
 	@Override
-	public void set(String name, String value) {
+	public void setConfig(String name, String value) {
 		this.value = value;
 	}
 
