@@ -5,24 +5,25 @@ import java.util.List;
 import org.eyyam.browserish.common.PageAction;
 import org.eyyam.browserish.common.PageActionTime;
 import org.eyyam.browserish.prefs.UserFiles;
+import org.eyyam.browserish.prefs.UserScript;
 import org.eyyam.browserish.prefs.UserStyle;
 
 import de.robv.android.xposed.XposedBridge;
 
-public class ModuleStyle extends Module {
+public class ModuleScript extends Module {
 
-	private UserFiles styles;
+	private UserFiles scripts;
 	
-	public ModuleStyle() {
-		super("style");
-		styles = new UserFiles(id, UserStyle.class);
-		styles.load();
-		XposedBridge.log("Browserish " + styles.size() + " styles loaded.");
+	public ModuleScript() {
+		super("script");
+		scripts = new UserFiles(id, UserScript.class);
+		scripts.load();
+		XposedBridge.log("Browserish " + scripts.size() + " scripts loaded.");
 	}
 
 	@Override
 	public String getMimeType(String filename) {
-		return "text/css";
+		return "application/javascript";
 	}
 
 	@Override
@@ -32,8 +33,8 @@ public class ModuleStyle extends Module {
 
 	@Override
 	public void getActionsForUrl(String url, PageActionTime time, List<PageAction> list) {
-		if (time.equals(PageActionTime.DOCUMENT_START)) {
-			styles.getActionsForUrl(url, list);
+		if (time.equals(PageActionTime.DOCUMENT_FINISH)) {
+			scripts.getActionsForUrl(url, list);
 		}
 	}
 

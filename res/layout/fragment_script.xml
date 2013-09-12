@@ -4,4 +4,12 @@
     android:layout_height="match_parent"
     tools:context=".ScriptFragment" >
 
+    <ListView
+        android:id="@+id/listScript"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" 
+        android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
+        android:paddingRight="?android:attr/listPreferredItemPaddingRight" >
+    </ListView>
+    
 </FrameLayout>

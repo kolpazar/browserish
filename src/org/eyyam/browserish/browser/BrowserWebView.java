@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import org.eyyam.browserish.ModuleManager;
 import org.eyyam.browserish.common.PageAction;
+import org.eyyam.browserish.common.PageActionTime;
 import org.eyyam.browserish.module.Module;
 
 import android.os.Handler;
@@ -85,17 +86,18 @@ public class BrowserWebView extends Browser {
 	}
 	
 	protected void executeJS(final Object webView, final String js) {
+		/*
 		new Handler(Looper.getMainLooper()).post(new Runnable() {
 		    @Override
-		    public void run() {
+		    public void run() {*/
 				try {
 					Method webViewLoadUrlMethod = XposedHelpers.findMethodExact(webViewClass, "loadUrl", String.class);
 					webViewLoadUrlMethod.invoke(webView, js);
 				} catch (Exception e) {
 					XposedBridge.log("browserish: JS execution error.");
-				}
+				}/*
 			}
-		});
+		});*/
 	}
 	
 	protected void injectStyle(Object webView, String filename) {
@@ -103,26 +105,41 @@ public class BrowserWebView extends Browser {
 		executeJS(webView, js);
 	}
 	
+	protected void injectScript(Object webView, String filename) {
+		String js = "javascript: function browserish_inject() { var elem = document.createElement('script'); elem.type = 'text/javascript'; elem.src = 'browserish://" + uuid + filename + "'; document.documentElement.appendChild(elem); }; browserish_inject(); ";
+		executeJS(webView, js);
+	}
+	
+	protected void applyAction(Object webView, PageAction action) {
+		XposedBridge.log("Browserish action " + action.getType() + " file " + action.getFilename());
+		switch(action.getType()) {
+		case STYLE:
+			injectStyle(webView, action.getFilename());
+			break;
+		case SCRIPT:
+			injectScript(webView, action.getFilename());
+			break;
+		}
+	}
+	
 	protected void documentStart(Object webView) {
 		XposedBridge.log("Browserish DOC START");
-		List<PageAction> actions = moduleManager.documentStart(getWebViewUrl(webView));
+		List<PageAction> actions = moduleManager.getActionsForUrl(getWebViewUrl(webView), PageActionTime.DOCUMENT_START);
 		XposedBridge.log("Browserish applying " + actions.size() + " actions.");
 		for (PageAction action: actions) {
-			XposedBridge.log("Browserish action " + action.getType() + " file " + action.getFilename());
-			switch(action.getType()) {
-			case STYLE:
-				injectStyle(webView, action.getFilename());
-				break;
-			case SCRIPT:
-				
-			}
+			applyAction(webView, action);
 		}
 		//String js = "javascript: function browserish_inject() { var elem = document.createElement('link'); elem.rel = 'stylesheet'; elem.href = 'browserish://" + uuid + "/style/red.css'; document.documentElement.appendChild(elem); }; browserish_inject(); ";
 		//executeJS(webView, js);
 	}
 	
 	protected void documentLoaded(Object webView) {
-		XposedBridge.log("Browserish DOC LOADED");
+		XposedBridge.log("Browserish DOC FINISH");
+		List<PageAction> actions = moduleManager.getActionsForUrl(getWebViewUrl(webView), PageActionTime.DOCUMENT_FINISH);
+		XposedBridge.log("Browserish applying " + actions.size() + " actions.");
+		for (PageAction action: actions) {
+			applyAction(webView, action);
+		}
 	}
 	
 	class BrowserishInterface {
@@ -210,7 +227,8 @@ public class BrowserWebView extends Browser {
 			int progress = (Integer) (param.args[1]);
 			XposedBridge.log("Browserish progress: " + progress);
 			if (getWebViewState(webView) == 0) {
-				executeJS(webView, "javascript: function browserish_checkdoc() { if (window && document && document.head && !window.injected) { window.injected = true; browserish.setState(\"1\"); } }; browserish_checkdoc();");
+				XposedBridge.log("Browserish trying to attach");
+				executeJS(webView, "javascript: function browserish_checkdoc() { if (window && document && document.documentElement && !window.injected) { window.injected = true; browserish.setState(\"1\"); } }; browserish_checkdoc();");
 			}
 		}
 	}

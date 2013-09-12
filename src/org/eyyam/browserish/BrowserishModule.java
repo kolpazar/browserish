@@ -2,7 +2,6 @@ package org.eyyam.browserish;
 
 import org.eyyam.browserish.browser.Browser;
 import org.eyyam.browserish.browser.BrowserAOSP;
-import org.eyyam.browserish.browser.BrowserDolphin;
 import org.eyyam.browserish.browser.BrowserTinfoil;
 import org.eyyam.browserish.common.Constants;
 import org.eyyam.browserish.prefs.Settings;
@@ -35,12 +34,7 @@ public class BrowserishModule implements IXposedHookLoadPackage {
 				XposedBridge.log("Browserish load, package: " + lpparam.packageName + ", process: " + lpparam.processName + ", first: " + lpparam.isFirstApplication);
 				browser = new BrowserTinfoil(new ModuleManager());
 			}
-		} /*else if (lpparam.packageName.equals(Constants.APP_BROWSER_DOLPHIN)) {
-			if (settings.getByName(Constants.APP_BROWSER_DOLPHIN).getBoolean()) {
-				XposedBridge.log("Browserish load, package: " + lpparam.packageName + ", process: " + lpparam.processName + ", first: " + lpparam.isFirstApplication);
-				browser = new BrowserDolphin(new ModuleManager());
-			}
-		} */
+		}
 		
 		if (browser != null) {
 			browser.initialize(lpparam);

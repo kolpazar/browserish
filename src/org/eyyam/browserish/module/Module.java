@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.eyyam.browserish.common.Constants;
 import org.eyyam.browserish.common.PageAction;
+import org.eyyam.browserish.common.PageActionTime;
 
 import android.os.Environment;
 
@@ -35,6 +36,6 @@ public abstract class Module {
 	
 	public abstract String getEncoding(String filename);
 
-	public abstract void getActionsForUrl(String url, List<PageAction> list);
+	public abstract void getActionsForUrl(String url, PageActionTime time, List<PageAction> list);
 	
 }
