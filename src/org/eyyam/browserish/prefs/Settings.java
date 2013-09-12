@@ -4,17 +4,20 @@ import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.eyyam.browserish.common.Constants;
+
 public class Settings extends PrefsGroup {
 
 	public static final String SETTING_GENERAL_ENABLED = "enabled";
-	public static final String SETTING_GENERAL_ENABLED_AOSP = "enabled.com.android.browser";
 	
 	
 	public Settings() {
 		super("general");
 		add(new Setting(SETTING_GENERAL_ENABLED, "Enable Browserish", ""));
 		add(new SettingHeader("Browsers"));
-		add(new Setting(SETTING_GENERAL_ENABLED_AOSP, "Stock Android Browser", ""));
+		add(new Setting(Constants.APP_BROWSER_STOCK, "Stock Android Browser", ""));
+		add(new Setting(Constants.APP_BROWSER_TINFOIL, "Tinfoil for Facebook", ""));
+		//add(new Setting(Constants.APP_BROWSER_DOLPHIN, "Dolphin Browser", ""));
 	}
 
 	public Setting getByName(String prefName) {
@@ -31,7 +34,7 @@ public class Settings extends PrefsGroup {
 			String prefName = line.substring(0, i);
 			Pref pref = prefs.get(prefName);
 			if (pref != null) {
-				pref.set(null, line.substring(i + 1));
+				pref.setConfig(null, line.substring(i + 1));
 			}
 		}
 	}

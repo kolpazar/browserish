@@ -4,4 +4,8 @@ public class Constants {
 
 	public static final String BROWSERISH_FOLDER = "/browserish/";
 
+	public static final String APP_BROWSER_STOCK = "com.android.browser";
+	public static final String APP_BROWSER_TINFOIL = "com.danvelazco.fbwrapper";
+	public static final String APP_BROWSER_DOLPHIN = "mobi.mgeek.TunnyBrowser";
+
 }

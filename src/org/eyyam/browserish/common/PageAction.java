@@ -1,7 +1,5 @@
 package org.eyyam.browserish.common;
 
-import org.eyyam.browserish.module.Module;
-
 public class PageAction {
 
 	private PageActionType type;
