@@ -1,33 +1,43 @@
 package org.eyyam.browserish.ui;
 
-import java.util.ArrayList;
-
 import org.eyyam.browserish.R;
 import org.eyyam.browserish.prefs.Pref;
 import org.eyyam.browserish.prefs.UserFile;
+import org.eyyam.browserish.prefs.UserFiles;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
 public class UserFileAdapter extends ArrayAdapter<Pref> {
 
-	private ArrayList<Pref> fileList;
+	private UserFiles files;
+	private int itemBackgroundId;
 
-	public UserFileAdapter(Context context, int textViewResourceId, ArrayList<Pref> fileList) {
-		super(context, textViewResourceId, fileList);
-		this.fileList = new ArrayList<Pref>();
-		this.fileList.addAll(fileList);
+	public UserFileAdapter(Context context, int textViewResourceId, UserFiles files) {
+		super(context, textViewResourceId);
+		this.files = files;
+		addAll(files.getArrayList());
+		
+		TypedArray a = getContext().obtainStyledAttributes(new int[] { android.R.attr.selectableItemBackground });
+		itemBackgroundId = a.getResourceId(0, 0);
+		a.recycle();
 	}
 
 	private class ViewHolder {
+		UserFile file;
 		TextView text;
 		TextView subText;
-		CheckBox check;
+		ToggleButton toggle;
+		LinearLayout layoutFile;
 	}
 
 	@Override
@@ -42,18 +52,36 @@ public class UserFileAdapter extends ArrayAdapter<Pref> {
 			holder = new ViewHolder();
 			holder.text = (TextView) convertView.findViewById(R.id.fileText);
 			holder.subText = (TextView) convertView.findViewById(R.id.fileSubText);
-			holder.check = (CheckBox) convertView.findViewById(R.id.fileCheck);
+			holder.toggle = (ToggleButton) convertView.findViewById(R.id.fileToggle);
+			holder.layoutFile = (LinearLayout) convertView.findViewById(R.id.layoutFile);
+			holder.layoutFile.setBackgroundResource(itemBackgroundId);
 			convertView.setTag(holder);
-			holder.check.setClickable(false);
 		} 
 		else {
 			holder = (ViewHolder) convertView.getTag();
 		}
 
-		UserFile file = (UserFile) fileList.get(position);
+		UserFile file = (UserFile) getItem(position);
+		holder.file = file;
 		holder.text.setText(file.getText());
 		holder.subText.setText(file.getSubText());
-		holder.check.setChecked(file.isEnabled());
+		holder.toggle.setChecked(file.isEnabled());
+		holder.layoutFile.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ViewHolder holder = (ViewHolder) ((View) v.getParent()).getTag();
+				Toast.makeText(getContext(), holder.file.getName(), Toast.LENGTH_SHORT).show();
+			}
+		});
+		holder.toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				ViewHolder holder = (ViewHolder) ((View) buttonView.getParent()).getTag();
+				holder.file.setEnabled(isChecked);
+				Toast.makeText(getContext(), "checked: " + isChecked, Toast.LENGTH_SHORT).show();
+				files.save();
+			}
+		});
 		return convertView;
 
 	}

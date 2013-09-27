@@ -2,7 +2,6 @@ package org.eyyam.browserish.prefs;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 

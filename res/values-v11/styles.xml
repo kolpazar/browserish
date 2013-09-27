@@ -7,7 +7,12 @@
     <style name="AppBaseTheme" parent="android:Theme.Holo">
 		
 		<item name="clickableItemBackground">?android:attr/selectableItemBackground</item>
+		<item name="android:actionBarStyle">@style/ActionBar.Background</item>
 		
     </style>
 
+    <style name="ActionBar.Background" parent="@android:style/Widget.Holo.ActionBar.Solid">
+        <item name="android:background">@drawable/actionbar</item>
+    </style>
+    
 </resources>

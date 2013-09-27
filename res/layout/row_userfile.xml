@@ -1,49 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:layout_gravity="fill_vertical"
+    android:baselineAligned="false"
+    android:divider="?android:dividerHorizontal"
+    android:dividerPadding="5dp"
+    android:gravity="center"
     android:minHeight="?android:attr/listPreferredItemHeight"
-	>
+    android:orientation="horizontal"
+    android:showDividers="middle" >
 
-    <CheckBox
-        android:id="@+id/fileCheck"
+    <LinearLayout
+        android:id="@+id/layoutFile"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:gravity="center_vertical"
-        android:duplicateParentState="true"
-        android:clickable="false"
-        android:focusableInTouchMode="false"
-        android:focusable="false"/>
+        android:layout_height="match_parent"
+        android:layout_gravity="fill_horizontal"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical|fill_horizontal"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:orientation="vertical" >
 
-	<LinearLayout
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:gravity="center_vertical"
-	    android:minHeight="?android:attr/listPreferredItemHeight"
-	    android:orientation="vertical" >
+        <TextView
+            android:id="@+id/fileText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="6dip"
+            android:paddingRight="5dip"
+            android:text="dadasddad"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall" />
 
-	    <TextView
-	        android:id="@+id/fileText"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:gravity="left|center_vertical"
-	        android:paddingLeft="6dip"
-	        android:paddingRight="5dip"
-	        android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+        <TextView
+            android:id="@+id/fileSubText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:focusable="false"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="6dip"
+            android:paddingRight="5dip"
+            android:text="asdasd"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </LinearLayout>
 
-	    <TextView
-	        android:id="@+id/fileSubText"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:gravity="left|center_vertical"
-	        android:paddingLeft="6dip"
-	        android:paddingRight="5dip"
-	        android:focusable="false"
-	        android:clickable="false"
-	        android:textAppearance="?android:attr/textAppearanceSmall" />
-	</LinearLayout>
+    <ToggleButton
+        android:id="@+id/fileToggle"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="fill_vertical"
+        android:background="@drawable/file_toggle"
+        android:checked="true"
+        android:minWidth="64dip"
+        android:text="ToggleButton" />
 
-</RelativeLayout>
+</LinearLayout>
