@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.eyyam.browserish.common.Constants.ApplyTime;
 import org.eyyam.browserish.config.file.UserFile;
-import org.eyyam.browserish.config.file.UserFiles;
+import org.eyyam.browserish.config.file.UserFileGroup;
 import org.eyyam.browserish.config.file.script.UserScriptGroup;
 import org.eyyam.browserish.config.file.style.UserStyleGroup;
 import org.eyyam.browserish.config.setting.SettingGroup;
@@ -15,7 +15,7 @@ import org.eyyam.browserish.config.setting.SettingGroup;
 public class Configuration {
 	
 	private SettingGroup settings;
-	private Map<String, UserFiles> userFileGroups = new LinkedHashMap<String, UserFiles>();
+	private Map<String, UserFileGroup> userFileGroups = new LinkedHashMap<String, UserFileGroup>();
 	
 	public Configuration() {
 		settings = new SettingGroup();
@@ -26,12 +26,12 @@ public class Configuration {
 		addUserFileGroup(new UserStyleGroup());
 		addUserFileGroup(new UserScriptGroup());
 		
-		for (UserFiles userFileGroup: userFileGroups.values()) {
+		for (UserFileGroup userFileGroup: userFileGroups.values()) {
 			userFileGroup.load();
 		}
 	}
 	
-	private void addUserFileGroup(UserFiles userFileGroup) {
+	private void addUserFileGroup(UserFileGroup userFileGroup) {
 		userFileGroups.put(userFileGroup.getId(), userFileGroup);
 	}
 	
@@ -39,13 +39,13 @@ public class Configuration {
 		return settings;
 	}
 	
-	public UserFiles getUserFileGroup(String id) {
+	public UserFileGroup getUserFileGroup(String id) {
 		return userFileGroups.get(id);
 	}
 	
 	public List<UserFile> getUserFilesForUrl(String url, ApplyTime time) {
 		List<UserFile> list = new LinkedList<UserFile>();
-		for (UserFiles userFileGroup: userFileGroups.values()) {
+		for (UserFileGroup userFileGroup: userFileGroups.values()) {
 			userFileGroup.getUserFilesForUrl(url, time, list);
 		}
 		return list;

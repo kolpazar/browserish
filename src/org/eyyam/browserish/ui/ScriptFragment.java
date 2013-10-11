@@ -1,7 +1,7 @@
 package org.eyyam.browserish.ui;
 
 import org.eyyam.browserish.R;
-import org.eyyam.browserish.config.file.UserFiles;
+import org.eyyam.browserish.config.file.UserFileGroup;
 import org.eyyam.browserish.config.file.script.UserScript;
 
 import android.os.Bundle;
@@ -13,10 +13,10 @@ import android.widget.ListView;
 
 public class ScriptFragment extends Fragment {
 
-	private UserFiles scripts;
+	private UserFileGroup scripts;
 	
 	public ScriptFragment() {
-		scripts = new UserFiles("script", UserScript.class);
+		scripts = new UserFileGroup("script", UserScript.class);
 		scripts.load();
 	}
 

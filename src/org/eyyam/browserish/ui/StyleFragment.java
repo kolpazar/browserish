@@ -1,7 +1,7 @@
 package org.eyyam.browserish.ui;
 
 import org.eyyam.browserish.R;
-import org.eyyam.browserish.config.file.UserFiles;
+import org.eyyam.browserish.config.file.UserFileGroup;
 import org.eyyam.browserish.config.file.style.UserStyle;
 
 import android.os.Bundle;
@@ -13,10 +13,10 @@ import android.widget.ListView;
 
 public class StyleFragment extends Fragment {
 
-	private UserFiles styles;
+	private UserFileGroup styles;
 	
 	public StyleFragment() {
-		styles = new UserFiles("style", UserStyle.class);
+		styles = new UserFileGroup("style", UserStyle.class);
 		styles.load();
 	}
 

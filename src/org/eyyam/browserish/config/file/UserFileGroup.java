@@ -10,11 +10,11 @@ import org.eyyam.browserish.common.Constants.ApplyTime;
 import org.eyyam.browserish.config.base.Pref;
 import org.eyyam.browserish.config.base.PrefsGroup;
 
-public class UserFiles extends PrefsGroup {
+public class UserFileGroup extends PrefsGroup {
 
 	private Class<UserFile> fileClass;
 	
-	public UserFiles(String id, Class<?> fileClass) {
+	public UserFileGroup(String id, Class<?> fileClass) {
 		super(id);
 		this.fileClass = (Class<UserFile>) fileClass; 
 	}

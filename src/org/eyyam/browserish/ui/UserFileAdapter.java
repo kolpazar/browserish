@@ -3,7 +3,7 @@ package org.eyyam.browserish.ui;
 import org.eyyam.browserish.R;
 import org.eyyam.browserish.config.base.Pref;
 import org.eyyam.browserish.config.file.UserFile;
-import org.eyyam.browserish.config.file.UserFiles;
+import org.eyyam.browserish.config.file.UserFileGroup;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -19,10 +19,10 @@ import android.widget.ToggleButton;
 
 public class UserFileAdapter extends ArrayAdapter<Pref> {
 
-	private UserFiles files;
+	private UserFileGroup files;
 	private int itemBackgroundId;
 
-	public UserFileAdapter(Context context, int textViewResourceId, UserFiles files) {
+	public UserFileAdapter(Context context, int textViewResourceId, UserFileGroup files) {
 		super(context, textViewResourceId);
 		this.files = files;
 		addAll(files.getArrayList());

@@ -10,7 +10,7 @@ import java.util.UUID;
 import org.eyyam.browserish.common.Constants.ApplyTime;
 import org.eyyam.browserish.config.Configuration;
 import org.eyyam.browserish.config.file.UserFile;
-import org.eyyam.browserish.config.file.UserFiles;
+import org.eyyam.browserish.config.file.UserFileGroup;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -167,7 +167,7 @@ public class BrowserWebView extends Browser {
 				if ((urlParts.length != 3) || (!urlParts[0].equals(uuid))) {
 					return;
 				}
-				UserFiles userFileGroup = config.getUserFileGroup(urlParts[1]);
+				UserFileGroup userFileGroup = config.getUserFileGroup(urlParts[1]);
 				if (userFileGroup != null) {
 					UserFile userFile = userFileGroup.getFile(urlParts[2]);
 					if (userFile != null) {
