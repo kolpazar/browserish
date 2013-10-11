@@ -2,9 +2,9 @@ package org.eyyam.browserish.ui;
 
 
 import org.eyyam.browserish.R;
-import org.eyyam.browserish.prefs.PrefsGroup;
-import org.eyyam.browserish.prefs.Setting;
-import org.eyyam.browserish.prefs.Settings;
+import org.eyyam.browserish.config.base.PrefsGroup;
+import org.eyyam.browserish.config.setting.Setting;
+import org.eyyam.browserish.config.setting.SettingGroup;
 
 import android.os.Bundle;
 import android.app.Fragment;
@@ -18,10 +18,10 @@ import android.widget.Toast;
 
 public class SettingsFragment extends Fragment {
 
-	private Settings settings;
+	private SettingGroup settings;
 	
 	public SettingsFragment() {
-		settings = new Settings();
+		settings = new SettingGroup();
 		settings.load();
 	}
 

@@ -4,7 +4,8 @@ import org.eyyam.browserish.browser.Browser;
 import org.eyyam.browserish.browser.BrowserAOSP;
 import org.eyyam.browserish.browser.BrowserTinfoil;
 import org.eyyam.browserish.common.Constants;
-import org.eyyam.browserish.prefs.Settings;
+import org.eyyam.browserish.config.Configuration;
+import org.eyyam.browserish.config.setting.SettingGroup;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XposedBridge;
@@ -17,29 +18,32 @@ public class BrowserishModule implements IXposedHookLoadPackage {
 	@Override
 	public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
 		
-		Settings settings = new Settings();
-		settings.load();
+		Configuration config = new Configuration();
 		
-		if (!settings.getByName(Settings.SETTING_GENERAL_ENABLED).getBoolean()) {
+		if (!config.getSettings().getByName(SettingGroup.SETTING_GENERAL_ENABLED).getBoolean()) {
 			return;
 		}
 		
-		if (lpparam.packageName.equals(Constants.APP_BROWSER_STOCK)) {
-			if (settings.getByName(Constants.APP_BROWSER_STOCK).getBoolean()) {
-				XposedBridge.log("Browserish load, package: " + lpparam.packageName + ", process: " + lpparam.processName + ", first: " + lpparam.isFirstApplication);
-				browser = new BrowserAOSP(new ModuleManager());
-			}
-		} else if (lpparam.packageName.equals(Constants.APP_BROWSER_TINFOIL)) {
-			if (settings.getByName(Constants.APP_BROWSER_TINFOIL).getBoolean()) {
-				XposedBridge.log("Browserish load, package: " + lpparam.packageName + ", process: " + lpparam.processName + ", first: " + lpparam.isFirstApplication);
-				browser = new BrowserTinfoil(new ModuleManager());
-			}
+		if (checkPackage(config, lpparam)) {
+			browser = new BrowserAOSP(config);
+		} else if (checkPackage(config, lpparam)) {
+			browser = new BrowserTinfoil(config);
 		}
 		
 		if (browser != null) {
+			config.loadUserFiles();
 			browser.initialize(lpparam);
 		}
 
 	}
 
+	private boolean checkPackage(Configuration config, LoadPackageParam lpparam) {
+		boolean shouldLoad = lpparam.packageName.equals(Constants.APP_BROWSER_STOCK)
+				&& config.getSettings().getByName(lpparam.packageName).getBoolean(); 
+		if (shouldLoad) {
+			XposedBridge.log("Browserish load, package: " + lpparam.packageName + ", process: " + 
+					lpparam.processName + ", first: " + lpparam.isFirstApplication);
+		}
+		return shouldLoad;
+	}
 }

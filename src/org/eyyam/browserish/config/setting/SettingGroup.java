@@ -1,22 +1,23 @@
-package org.eyyam.browserish.prefs;
+package org.eyyam.browserish.config.setting;
 
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 import org.eyyam.browserish.common.Constants;
+import org.eyyam.browserish.config.base.Pref;
+import org.eyyam.browserish.config.base.PrefsGroup;
 
-public class Settings extends PrefsGroup {
+public class SettingGroup extends PrefsGroup {
 
 	public static final String SETTING_GENERAL_ENABLED = "enabled";
 	
-	
-	public Settings() {
+	public SettingGroup() {
 		super("general");
-		add(new Setting(SETTING_GENERAL_ENABLED, "Enable Browserish", ""));
-		add(new SettingHeader("Browsers"));
-		add(new Setting(Constants.APP_BROWSER_STOCK, "Stock Android Browser", ""));
-		add(new Setting(Constants.APP_BROWSER_TINFOIL, "Tinfoil for Facebook", ""));
+		add(new Setting(id, SETTING_GENERAL_ENABLED, "Enable Browserish", ""));
+		add(new SettingHeader(id, "Browsers"));
+		add(new Setting(id, Constants.APP_BROWSER_STOCK, "Stock Android Browser", ""));
+		add(new Setting(id, Constants.APP_BROWSER_TINFOIL, "Tinfoil for Facebook", ""));
 		//add(new Setting(Constants.APP_BROWSER_DOLPHIN, "Dolphin Browser", ""));
 	}
 

@@ -1,4 +1,4 @@
-package org.eyyam.browserish.prefs;
+package org.eyyam.browserish.config.file;
 
 import java.util.regex.Pattern;
 

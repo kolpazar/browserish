@@ -1,18 +1,20 @@
-package org.eyyam.browserish.prefs;
+package org.eyyam.browserish.config.setting;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import org.eyyam.browserish.config.base.Pref;
 
 public class Setting extends Pref {
 
 	private String value;
 	
-	public Setting(String name, String text, String subText) {
-		super(name, text, subText);
+	public Setting(String groupId, String name, String text, String subText) {
+		super(groupId, name, text, subText);
 	}
 	
-	public Setting(String name, String text) {
-		this(name, text, "");
+	public Setting(String groupId, String name, String text) {
+		this(groupId, name, text, "");
 	}
 
 	public void setBoolean(boolean value) {

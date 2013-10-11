@@ -2,7 +2,7 @@ package org.eyyam.browserish.browser;
 
 import java.util.Map;
 
-import org.eyyam.browserish.ModuleManager;
+import org.eyyam.browserish.config.Configuration;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -16,8 +16,8 @@ public class BrowserDolphin extends BrowserWebView {
 	private Class<?> webViewClientClass;
 	private Class<?> webChromeClientClass;
 
-	public BrowserDolphin(ModuleManager moduleManager) {
-		super(moduleManager);
+	public BrowserDolphin(Configuration config) {
+		super(config);
 	}
 	
 	@Override

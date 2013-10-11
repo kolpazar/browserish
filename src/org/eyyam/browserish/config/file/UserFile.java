@@ -1,24 +1,30 @@
-package org.eyyam.browserish.prefs;
+package org.eyyam.browserish.config.file;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eyyam.browserish.common.PageAction;
-import org.eyyam.browserish.common.PageActionType;
+import org.eyyam.browserish.common.Constants;
+import org.eyyam.browserish.common.Constants.ApplyTime;
+import org.eyyam.browserish.common.Constants.ApplyType;
+import org.eyyam.browserish.config.base.Pref;
+
+import android.os.Environment;
 
 public abstract class UserFile extends Pref {
 
 	protected String includes;
 	protected List<UserFileRule> rules = new LinkedList<UserFileRule>();
 	protected boolean enabled;
-	protected PageAction action;
-	protected PageActionType actionType;
+	protected ApplyTime applyTime;
+	protected ApplyType applyType;
 
-	public UserFile(String name, PageActionType actionType) {
-		super(name, "", "");
-		this.actionType = actionType;
+	public UserFile(String groupId, String name) {
+		super(groupId, name, "", "");
 	}
 	
 	public boolean isEnabled() {
@@ -29,14 +35,19 @@ public abstract class UserFile extends Pref {
 		this.enabled = enabled;
 	}
 	
-	public abstract String getSubText();
-	
-	public PageAction getAction(String moduleId) {
-		if (action == null) {
-			action = new PageAction(actionType, "/" + moduleId + "/" + name);
-		}
-		return action;
+	public ApplyType getApplyType() {
+		return applyType;
 	}
+	
+	public String getRelativePath() {
+		return groupId + "/" + name;
+	}
+	
+	public abstract String getMimeType();
+	
+	public abstract String getEncoding();
+
+	public abstract String getSubText();
 	
 	public void setIncludes(String includes) {
 		this.includes = includes;
@@ -67,8 +78,8 @@ public abstract class UserFile extends Pref {
 		} 
 	}
 
-	public boolean appliesToUrl(String url) {
-		if (!enabled) {
+	public boolean appliesTo(String url, ApplyTime time) {
+		if (!enabled || this.applyTime != time) {
 			return false;
 		}
 		for (UserFileRule rule: rules) {
@@ -88,5 +99,14 @@ public abstract class UserFile extends Pref {
 			builder.append(rule.toString());
 		}
 		return builder.toString();
+	}
+	
+	public InputStream createStream() {
+		try {
+			return new FileInputStream(Environment.getExternalStorageDirectory().getAbsolutePath() + 
+					Constants.BROWSERISH_FOLDER + getRelativePath());
+		} catch (FileNotFoundException e) {
+			return null;
+		}
 	}
 }

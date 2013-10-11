@@ -2,7 +2,7 @@ package org.eyyam.browserish.browser;
 
 import java.util.Map;
 
-import org.eyyam.browserish.ModuleManager;
+import org.eyyam.browserish.config.Configuration;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -16,8 +16,8 @@ public class BrowserTinfoil extends BrowserWebView {
 	private Class<?> webViewClientClass;
 	private Class<?> webChromeClientClass;
 
-	public BrowserTinfoil(ModuleManager moduleManager) {
-		super(moduleManager);
+	public BrowserTinfoil(Configuration config) {
+		super(config);
 	}
 	
 	@Override

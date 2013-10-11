@@ -1,4 +1,4 @@
-package org.eyyam.browserish.prefs;
+package org.eyyam.browserish.config.base;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -15,11 +15,15 @@ import android.os.Environment;
 
 public abstract class PrefsGroup {
 
+	protected String id;
 	protected Map<String, Pref> prefs = new LinkedHashMap<String, Pref>();
-	protected String name;
 	
-	public PrefsGroup(String name) {
-		this.name = name;
+	public PrefsGroup(String id) {
+		this.id = id;
+	}
+	
+	public String getId() {
+		return id;
 	}
 	
 	public Pref getByName(String prefName) {
@@ -42,7 +46,7 @@ public abstract class PrefsGroup {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(
 					Environment.getExternalStorageDirectory().getAbsolutePath() + 
-					Constants.BROWSERISH_FOLDER + name + ".conf"));
+					Constants.BROWSERISH_FOLDER + id + ".conf"));
 			
 			loadPrefs(reader);
 			reader.close();
@@ -60,7 +64,7 @@ public abstract class PrefsGroup {
 		try {
 			FileOutputStream out = new FileOutputStream(
 					Environment.getExternalStorageDirectory().getAbsolutePath() + 
-					Constants.BROWSERISH_FOLDER + name + ".conf");
+					Constants.BROWSERISH_FOLDER + id + ".conf");
 			savePrefs(out);
 			out.flush();
 			out.close();

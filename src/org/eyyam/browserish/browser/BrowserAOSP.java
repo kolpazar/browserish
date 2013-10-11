@@ -3,7 +3,7 @@ package org.eyyam.browserish.browser;
 import java.lang.reflect.Field;
 import java.util.Map;
 
-import org.eyyam.browserish.ModuleManager;
+import org.eyyam.browserish.config.Configuration;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -22,8 +22,8 @@ public class BrowserAOSP extends BrowserWebView {
 	private Class<?> tabClass;
 	private Class<?> homeProviderClass;
 	
-	public BrowserAOSP(ModuleManager moduleManager) {
-		super(moduleManager);
+	public BrowserAOSP(Configuration config) {
+		super(config);
 	}
 	
 	@Override

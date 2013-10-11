@@ -1,4 +1,4 @@
-package org.eyyam.browserish.prefs;
+package org.eyyam.browserish.config.file;
 
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
@@ -6,14 +6,16 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.List;
 
-import org.eyyam.browserish.common.PageAction;
+import org.eyyam.browserish.common.Constants.ApplyTime;
+import org.eyyam.browserish.config.base.Pref;
+import org.eyyam.browserish.config.base.PrefsGroup;
 
 public class UserFiles extends PrefsGroup {
 
 	private Class<UserFile> fileClass;
 	
-	public UserFiles(String name, Class<?> fileClass) {
-		super(name);
+	public UserFiles(String id, Class<?> fileClass) {
+		super(id);
 		this.fileClass = (Class<UserFile>) fileClass; 
 	}
 
@@ -27,8 +29,8 @@ public class UserFiles extends PrefsGroup {
 				String file = line.substring(1, line.length() - 1);
 				Constructor<UserFile> c;
 				try {
-					c = fileClass.getConstructor(String.class);
-					pref = c.newInstance(file);
+					c = fileClass.getConstructor(String.class, String.class);
+					pref = c.newInstance(id, file);
 					prefs.put(file, pref);
 				} catch (Exception e) {
 				}
@@ -52,10 +54,14 @@ public class UserFiles extends PrefsGroup {
 		}
 	}
 	
-	public void getActionsForUrl(String url, List<PageAction> list) {
+	public UserFile getFile(String name) {
+		return (UserFile) prefs.get(name);
+	}
+	
+	public void getUserFilesForUrl(String url, ApplyTime time, List<UserFile> list) {
 		for (Pref pref: prefs.values()) {
-			if (((UserFile) pref).appliesToUrl(url)) {
-				list.add(((UserFile) pref).getAction(name));
+			if (((UserFile) pref).appliesTo(url, time)) {
+				list.add((UserFile) pref);
 			}
 		}
 	}

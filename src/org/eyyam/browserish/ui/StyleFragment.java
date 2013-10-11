@@ -1,8 +1,8 @@
 package org.eyyam.browserish.ui;
 
 import org.eyyam.browserish.R;
-import org.eyyam.browserish.prefs.UserFiles;
-import org.eyyam.browserish.prefs.UserStyle;
+import org.eyyam.browserish.config.file.UserFiles;
+import org.eyyam.browserish.config.file.style.UserStyle;
 
 import android.os.Bundle;
 import android.app.Fragment;

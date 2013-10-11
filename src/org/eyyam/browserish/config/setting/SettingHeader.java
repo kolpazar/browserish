@@ -1,12 +1,14 @@
-package org.eyyam.browserish.prefs;
+package org.eyyam.browserish.config.setting;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.eyyam.browserish.config.base.Pref;
+
 public class SettingHeader extends Pref {
 
-	public SettingHeader(String text) {
-		super(text, text, "");
+	public SettingHeader(String groupId, String text) {
+		super(groupId, text, text, "");
 	}
 
 	@Override

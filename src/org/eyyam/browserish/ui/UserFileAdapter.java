@@ -1,9 +1,9 @@
 package org.eyyam.browserish.ui;
 
 import org.eyyam.browserish.R;
-import org.eyyam.browserish.prefs.Pref;
-import org.eyyam.browserish.prefs.UserFile;
-import org.eyyam.browserish.prefs.UserFiles;
+import org.eyyam.browserish.config.base.Pref;
+import org.eyyam.browserish.config.file.UserFile;
+import org.eyyam.browserish.config.file.UserFiles;
 
 import android.content.Context;
 import android.content.res.TypedArray;
