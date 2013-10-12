@@ -7,13 +7,15 @@
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="16" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" android:hardwareAccelerated="true">
+        android:theme="@style/AppTheme" >
         <activity
             android:name="org.eyyam.browserish.BrowserishActivity"
             android:label="@string/app_name" >
@@ -23,9 +25,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <meta-data android:name="xposedmodule" android:value="true"/>
-        <meta-data android:name="xposedminversion" android:value="2.0*"/>
-        <meta-data android:name="xposeddescription" android:value="Userstyle and userscript manager for the AOSP browser."/>
-	</application>
+
+        <meta-data
+            android:name="xposedmodule"
+            android:value="true" />
+        <meta-data
+            android:name="xposedminversion"
+            android:value="2.0*" />
+        <meta-data
+            android:name="xposeddescription"
+            android:value="Userstyle and userscript manager for the AOSP browser." />
+
+        <activity
+            android:name="org.eyyam.browserish.ui.UserFileActivity"
+            android:label="@string/title_activity_file"
+            android:parentActivityName="org.eyyam.browserish.BrowserishActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.eyyam.browserish.BrowserishActivity" />
+        </activity>
+    </application>
 
 </manifest>

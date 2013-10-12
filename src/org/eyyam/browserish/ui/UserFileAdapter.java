@@ -1,11 +1,13 @@
 package org.eyyam.browserish.ui;
 
 import org.eyyam.browserish.R;
-import org.eyyam.browserish.config.base.Pref;
+import org.eyyam.browserish.config.Pref;
 import org.eyyam.browserish.config.file.UserFile;
 import org.eyyam.browserish.config.file.UserFileGroup;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class UserFileAdapter extends ArrayAdapter<Pref> {
@@ -70,7 +71,12 @@ public class UserFileAdapter extends ArrayAdapter<Pref> {
 			@Override
 			public void onClick(View v) {
 				ViewHolder holder = (ViewHolder) ((View) v.getParent()).getTag();
-				Toast.makeText(getContext(), holder.file.getName(), Toast.LENGTH_SHORT).show();
+				Intent intent = new Intent(getContext(), UserFileActivity.class);
+				intent.putExtra(UserFileActivity.EXTRA_GROUPID, holder.file.getGroupId());
+				intent.putExtra(UserFileActivity.EXTRA_FILE, holder.file.getName());
+				getContext().startActivity(intent);
+				((Activity) getContext()).overridePendingTransition(R.anim.user_file_in, R.anim.user_file_out);
+				//Toast.makeText(getContext(), holder.file.getName(), Toast.LENGTH_SHORT).show();
 			}
 		});
 		holder.toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -78,7 +84,7 @@ public class UserFileAdapter extends ArrayAdapter<Pref> {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				ViewHolder holder = (ViewHolder) ((View) buttonView.getParent()).getTag();
 				holder.file.setEnabled(isChecked);
-				Toast.makeText(getContext(), "checked: " + isChecked, Toast.LENGTH_SHORT).show();
+				//Toast.makeText(getContext(), "checked: " + isChecked, Toast.LENGTH_SHORT).show();
 				files.save();
 			}
 		});
