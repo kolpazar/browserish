@@ -1,4 +1,4 @@
-package org.eyyam.browserish.config.base;
+package org.eyyam.browserish.config;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

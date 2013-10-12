@@ -7,16 +7,16 @@ import java.lang.reflect.Constructor;
 import java.util.List;
 
 import org.eyyam.browserish.common.Constants.ApplyTime;
-import org.eyyam.browserish.config.base.Pref;
-import org.eyyam.browserish.config.base.PrefsGroup;
+import org.eyyam.browserish.config.Pref;
+import org.eyyam.browserish.config.PrefsGroup;
 
 public class UserFileGroup extends PrefsGroup {
 
-	private Class<UserFile> fileClass;
+	private Class<? extends UserFile> fileClass;
 	
-	public UserFileGroup(String id, Class<?> fileClass) {
+	public UserFileGroup(String id, Class<? extends UserFile> fileClass) {
 		super(id);
-		this.fileClass = (Class<UserFile>) fileClass; 
+		this.fileClass = fileClass; 
 	}
 
 	@Override
@@ -27,9 +27,9 @@ public class UserFileGroup extends PrefsGroup {
 		while ((line = reader.readLine()) != null) {
 			if (line.startsWith("[") && line.endsWith("]")) {
 				String file = line.substring(1, line.length() - 1);
-				Constructor<UserFile> c;
+				Constructor<? extends UserFile> c;
 				try {
-					c = fileClass.getConstructor(String.class, String.class);
+					c = (Constructor<? extends UserFile>) fileClass.getConstructor(String.class, String.class);
 					pref = c.newInstance(id, file);
 					prefs.put(file, pref);
 				} catch (Exception e) {

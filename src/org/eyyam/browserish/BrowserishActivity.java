@@ -36,15 +36,13 @@ public class BrowserishActivity extends Activity {
         setContentView(mViewPager);
 
         mTabsAdapter = new TabsAdapter(this, mViewPager);
-        mTabsAdapter.addTab(actionBar.newTab().setText("General"), SettingsFragment.class, null);
-        mTabsAdapter.addTab(actionBar.newTab().setText("Styles"), StyleFragment.class, null);
-        mTabsAdapter.addTab(actionBar.newTab().setText("Scripts"), ScriptFragment.class, null);
+        mTabsAdapter.addTab(actionBar.newTab().setText(R.string.tab_general), SettingsFragment.class, null);
+        mTabsAdapter.addTab(actionBar.newTab().setText(R.string.tab_styles), StyleFragment.class, null);
+        mTabsAdapter.addTab(actionBar.newTab().setText(R.string.tab_scripts), ScriptFragment.class, null);
 	}
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.browserish, menu);
 		return true;
 	}
@@ -112,7 +110,7 @@ public class BrowserishActivity extends Activity {
 		@Override
 		public void onTabSelected(Tab tab, android.app.FragmentTransaction ft) {
 			Object tag = tab.getTag();
-			for (int i=0; i<mTabs.size(); i++) {
+			for (int i = 0; i < mTabs.size(); i++) {
 				if (mTabs.get(i) == tag) {
 					mViewPager.setCurrentItem(i);
 				}

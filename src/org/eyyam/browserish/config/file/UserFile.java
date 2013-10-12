@@ -11,7 +11,7 @@ import java.util.List;
 import org.eyyam.browserish.common.Constants;
 import org.eyyam.browserish.common.Constants.ApplyTime;
 import org.eyyam.browserish.common.Constants.ApplyType;
-import org.eyyam.browserish.config.base.Pref;
+import org.eyyam.browserish.config.Pref;
 
 import android.os.Environment;
 

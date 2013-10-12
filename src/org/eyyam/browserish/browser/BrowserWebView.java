@@ -1,19 +1,17 @@
 package org.eyyam.browserish.browser;
 
-import java.io.InputStream;
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.eyyam.browserish.BrowserishCore;
 import org.eyyam.browserish.common.Constants.ApplyTime;
-import org.eyyam.browserish.config.Configuration;
 import org.eyyam.browserish.config.file.UserFile;
 import org.eyyam.browserish.config.file.UserFileGroup;
 
-import android.os.Handler;
-import android.os.Looper;
 import android.webkit.WebResourceResponse;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
@@ -31,14 +29,13 @@ public class BrowserWebView extends Browser {
 
 	protected Class<?> webViewClass;
 
-	public BrowserWebView(Configuration config) {
-		super(config);
+	public BrowserWebView(BrowserishCore browserish) {
+		super(browserish);
 		uuid = UUID.randomUUID().toString();
 	}
 
 	@Override
 	public void initialize(LoadPackageParam loadParam) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -121,7 +118,7 @@ public class BrowserWebView extends Browser {
 	
 	protected void documentStart(Object webView) {
 		XposedBridge.log("Browserish DOC START");
-		List<UserFile> userFiles = config.getUserFilesForUrl(getWebViewUrl(webView), ApplyTime.DOCUMENT_START);
+		List<UserFile> userFiles = browserish.getUserFilesForUrl(getWebViewUrl(webView), ApplyTime.DOCUMENT_START);
 		XposedBridge.log("Browserish applying " + userFiles.size() + " actions.");
 		for (UserFile userFile: userFiles) {
 			injectUserFile(webView, userFile);
@@ -132,7 +129,7 @@ public class BrowserWebView extends Browser {
 	
 	protected void documentLoaded(Object webView) {
 		XposedBridge.log("Browserish DOC FINISH");
-		List<UserFile> userFiles = config.getUserFilesForUrl(getWebViewUrl(webView), ApplyTime.DOCUMENT_FINISH);
+		List<UserFile> userFiles = browserish.getUserFilesForUrl(getWebViewUrl(webView), ApplyTime.DOCUMENT_FINISH);
 		XposedBridge.log("Browserish applying " + userFiles.size() + " actions.");
 		for (UserFile userFile: userFiles) {
 			injectUserFile(webView, userFile);
@@ -141,19 +138,18 @@ public class BrowserWebView extends Browser {
 	
 	class BrowserishInterface {
 
-		private Object webView = null;
+		private WeakReference<Object> webView = null;
 		
-		public BrowserishInterface(Object webView) {
-			this.webView = webView;
+		public BrowserishInterface() {
 		}
 		
 		public void setWebView(Object webView) {
-			this.webView = webView;
+			this.webView = new WeakReference<Object>(webView);
 		}
 		
 		public void setState(String state) {
 			XposedBridge.log("Browserish tab state external: " + state);
-			setWebViewState(webView, Integer.valueOf(state));
+			setWebViewState(webView.get(), Integer.valueOf(state));
 		}
 	}
 	
@@ -167,7 +163,7 @@ public class BrowserWebView extends Browser {
 				if ((urlParts.length != 3) || (!urlParts[0].equals(uuid))) {
 					return;
 				}
-				UserFileGroup userFileGroup = config.getUserFileGroup(urlParts[1]);
+				UserFileGroup userFileGroup = browserish.getUserFileGroup(urlParts[1]);
 				if (userFileGroup != null) {
 					UserFile userFile = userFileGroup.getFile(urlParts[2]);
 					if (userFile != null) {
@@ -185,7 +181,8 @@ public class BrowserWebView extends Browser {
 		@Override
 		protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 			XposedBridge.log("Browserish before create webview");
-			BrowserishInterface intf = new BrowserishInterface(null);
+			BrowserishInterface intf = new BrowserishInterface();
+			@SuppressWarnings("unchecked")
 			Map<String, Object> interfaces = ((Map<String,Object>) (param.args[3]));
 			if (interfaces == null) {
 				interfaces = new HashMap<String, Object>();
@@ -197,6 +194,7 @@ public class BrowserWebView extends Browser {
 		@Override
 		protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 			XposedBridge.log("Browserish after create webview " + param.thisObject);
+			@SuppressWarnings("unchecked")
 			BrowserishInterface intf = (BrowserishInterface) ((Map<String,Object>) (param.args[3])).get("browserish");
 			XposedHelpers.setAdditionalInstanceField(param.thisObject, FIELD_INTF_KEY, intf);
 			intf.setWebView(param.thisObject);

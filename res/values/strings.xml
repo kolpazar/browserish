@@ -3,6 +3,16 @@
 
     <string name="app_name">Browserish</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="title_activity_file">File Info</string>
+    <string name="menu_edit">Edit</string>
+    <string name="menu_delete">Delete</string>
+    <string name="caption_style_name">Style name</string>
+    <string name="caption_script_name">Script name</string>
+    <string name="version_na">Not specified</string>
+    <string name="caption_version">Version</string>
+    <string name="caption_filename">File name</string>
+    <string name="caption_affected">Affected sites</string>
+    <string name="tab_general">General</string>
+    <string name="tab_styles">Styles</string>
+    <string name="tab_scripts">Scripts</string>
 </resources>

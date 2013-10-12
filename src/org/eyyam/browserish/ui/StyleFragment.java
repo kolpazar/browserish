@@ -1,8 +1,8 @@
 package org.eyyam.browserish.ui;
 
 import org.eyyam.browserish.R;
-import org.eyyam.browserish.config.file.UserFileGroup;
-import org.eyyam.browserish.config.file.style.UserStyle;
+import org.eyyam.browserish.common.Constants;
+import org.eyyam.browserish.BrowserishCore;
 
 import android.os.Bundle;
 import android.app.Fragment;
@@ -13,20 +13,14 @@ import android.widget.ListView;
 
 public class StyleFragment extends Fragment {
 
-	private UserFileGroup styles;
-	
-	public StyleFragment() {
-		styles = new UserFileGroup("style", UserStyle.class);
-		styles.load();
-	}
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_style, container, false);
 
 		ListView listStyle = (ListView) view.findViewById(R.id.listStyle);
-		UserFileAdapter listAdapter = new UserFileAdapter(container.getContext(), R.layout.row_setting, styles);
+		UserFileAdapter listAdapter = new UserFileAdapter(container.getContext(), R.layout.row_setting, 
+				BrowserishCore.getInstance().getUserFileGroup(Constants.GROUPID_STYLE));
 		listStyle.setAdapter(listAdapter);
 		return view;
 	}

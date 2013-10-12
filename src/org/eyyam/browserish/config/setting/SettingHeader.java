@@ -3,7 +3,7 @@ package org.eyyam.browserish.config.setting;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import org.eyyam.browserish.config.base.Pref;
+import org.eyyam.browserish.config.Pref;
 
 public class SettingHeader extends Pref {
 

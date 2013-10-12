@@ -1,4 +1,4 @@
-package org.eyyam.browserish.config.base;
+package org.eyyam.browserish.config;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,6 +17,10 @@ public abstract class Pref {
 		this.subText = subText;
 	}
 
+	public String getGroupId() {
+		return groupId;
+	}
+	
 	public String getName() {
 		return name;
 	}
